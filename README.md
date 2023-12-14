@@ -15,11 +15,12 @@ Realizar un bingo funcional en java.
 
 # Análisis
 1. Menú del programa.
-   Cuenta con dos opciones, siendo la primera para iniciar el juego y la segunda para salir del programa.
-   Cuando una partida finalize tiene que volver a aparecer el menú del programa.
+Cuenta con dos opciones, siendo la primera para iniciar el juego y la segunda para salir del programa.
+Cuando una partida finalize tiene que volver a aparecer el menú del programa.
    
 3. Generación aleatoria del cartón.
-   La generación por columnas de números aleatorios cuenta con distintos rangos:
+   
+ La generación por columnas de números aleatorios cuenta con distintos rangos:
       - 1º Columna: Números del 1 al 9.
       - 2º Columna: Números del 10 al 19.
       - 3º Columna: Números del 20 al 29.
@@ -29,27 +30,27 @@ Realizar un bingo funcional en java.
       - 7º Columna: Números del 60 al 69.
       - 8º Columna: Números del 70 al 79.
       - 9º Columna: Números del 80 al 89.
-   Los números generados no pueden repetirse.
-   Los números generados tienen que estar ordenados de menor a mayor por columna.
+Los números generados no pueden repetirse.
+Los números generados tienen que estar ordenados de menor a mayor por columna.
 
-4. Generación aleatoria de número(1-89) por ronda.
-   Las rondas tienen que estar enumeradas.
-   Generación del número(1-89) de la ronda específica.
-   El número por ronda debe de ser único, es decir, no se tiene que repetir.
+5. Generación aleatoria de número(1-89) por ronda.
+Las rondas tienen que estar enumeradas.
+Generación del número(1-89) de la ronda específica.
+El número por ronda debe de ser único, es decir, no se tiene que repetir.
 
-5. Tachar automaticamente números que aparezcan en el cartón.
-   Comprobar que el número de la ronda coincide con algún número del cartón.
-   Si este coincide, tachar el número del cartón.
+6. Tachar automaticamente números que aparezcan en el cartón.
+Comprobar que el número de la ronda coincide con algún número del cartón.
+Si este coincide, tachar el número del cartón.
    
-6. Detectar línea en el cartón.
-   Comprobar si una linea completa está tachada.
-   Solo imprimirá el mensaje de Línea! la primera vez que se tache una.
+7. Detectar línea en el cartón.
+Comprobar si una linea completa está tachada.
+Solo imprimirá el mensaje de Línea! la primera vez que se tache una.
    
 8. Detectar bingo en el cartón.
-   Comprobar si el cartón completo está tachado.
-   Si está completo imprimir el mensaje de Bingo!
-   Si no está completo se paasa a la siguiente ronda cuando el jugador lo especifique.
+Comprobar si el cartón completo está tachado.
+Si está completo imprimir el mensaje de Bingo!
+Si no está completo se paasa a la siguiente ronda cuando el jugador lo especifique.
    
 10. Correcciones finales.
-    Comprobaciones para que todos los requisitos funcionen y buscar la optimización del código.
+Comprobaciones para que todos los requisitos funcionen y buscar la optimización del código.
    
