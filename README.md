@@ -1,19 +1,19 @@
 ## PROYECTO-PRIMERA-EVALUCACION-BINGO
-# Componentes: Ruben Camacho Gómez, Patricia Martínez Fernández y Pablo Rojas Roldán
+## Componentes: Ruben Camacho Gómez, Patricia Martínez Fernández y Pablo Rojas Roldán
 
-# Objetivo final del proyecto
+## Objetivo final del proyecto
 Realizar un bingo funcional en java.
 
-#Especificación de requisitos
+## Especificación de requisitos
 1. Menú del programa. (Patricia) Estimación: 14/12/2023
 2. Generación aleatoria del cartón. (Patricia) Estimación: 14/12/2023
 3. Generación aleatoria de número(1-89) por ronda. (Ruben) Estimación: 15/12/2023
 4. Tachar automaticamente números que aparezcan en el cartón. (Ruben) Estimación: 15/12/2023
 5. Detectar línea en el cartón. (Pablo) Estimación: 16/12/2023 - 17/12/2023
 6. Detectar bingo en el cartón. (Pablo) Estimación: 16/12/2023 - 17/12/2023
-8. Correcciones finales. (Grupo)
+7. Correcciones finales. (Grupo)
 
-# Análisis
+## Análisis
 1. Menú del programa.
 
 Cuenta con dos opciones, siendo la primera para iniciar el juego y la segunda para salir del programa.
@@ -22,15 +22,15 @@ Cuando una partida finalize tiene que volver a aparecer el menú del programa.
 2. Generación aleatoria del cartón.
 
 La generación por columnas de números aleatorios cuenta con distintos rangos:
-	- 1º Columna: Números del 1 al 9.
-	- 2º Columna: Números del 10 al 19.
-	- 3º Columna: Números del 20 al 29.
-	- 4º Columna: Números del 30 al 39.
-	- 5º Columna: Números del 40 al 49.
-	- 6º Columna: Números del 50 al 59.
-	- 7º Columna: Números del 60 al 69.
-	- 8º Columna: Números del 70 al 79.
-	- 9º Columna: Números del 80 al 89.
+- 1º Columna: Números del 1 al 9.
+- 2º Columna: Números del 10 al 19.
+- 3º Columna: Números del 20 al 29.
+- 4º Columna: Números del 30 al 39.
+- 5º Columna: Números del 40 al 49.
+- 6º Columna: Números del 50 al 59.
+- 7º Columna: Números del 60 al 69.
+- 8º Columna: Números del 70 al 79.
+- 9º Columna: Números del 80 al 89.
 
 Los números generados no pueden repetirse.
 Los números generados tienen que estar ordenados de menor a mayor por columna.
