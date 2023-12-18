@@ -7,6 +7,7 @@ public class bingo {
 
 	static Scanner sc = new Scanner(System.in);
 
+	
 	// Conteo de rondas
 	public static int Rondas(int contador) {
 		contador++;
@@ -47,6 +48,22 @@ public class bingo {
 		}
 
 		return cartonComprobado;
+	}
+	
+	//Pasar al siguiente turno
+	public static void Turno(String pasarTurno) {
+		
+		String continua;
+		
+		System.out.println("Introduce 'a' para pasar al siguiente turno");
+		continua=sc.nextLine();
+		
+		while(!continua.equalsIgnoreCase("a")) {
+			System.out.println("Error, introduce 'a' para avanzar");
+			continua=sc.nextLine();
+		}
+		
+		
 	}
 
 	// Comprueba que todos los números del carton están a 0 y termina el juego
@@ -117,7 +134,8 @@ public class bingo {
 		int[] numerosMostrados = new int[90];
 		int menu, contador = 0, aleatorio = 0;
 		boolean lineaCantada = false;
-		String espacio;
+		String avance = null;
+		
 		
 		System.out.println("===========================");
 		System.out.println("   BIENVENIDO AL BINGO   ");
@@ -128,7 +146,9 @@ public class bingo {
 		menu = sc.nextInt();
 
 		System.out.println("\n");
-
+		//Limpia buffer ya que al recibir un valor númerico primero y luego un string produce un salto de línea, por lo tanto, para que esto no ocurra se debe limpiar el buffer de esta forma
+		sc.nextLine();
+		
 		if (menu == 1) {
 
 			for (int i = 0; i < carton.length; i++) {
@@ -169,7 +189,7 @@ public class bingo {
 			imprimeMatriz(carton);
 
 			do {
-				boolean pasarTurno = false;
+				
 				System.out.println("\n\n===========================");
 				contador = Rondas(contador);
 				System.out.println("Ronda: " + contador);
@@ -181,20 +201,9 @@ public class bingo {
 				imprimeMatriz(carton);
 				System.out.println("\n\n===========================");
 				cartonLinea(carton, lineaCantada);
+				Turno(avance);
 				
-				System.out.println("Pulsa espacio para pasar de turno");
-				while(!pasarTurno) {
-					
-					espacio=sc.nextLine();
-					
-					if(espacio.equals(" ")) {
-					pasarTurno=true;
-					}
-					else {
-						System.out.println("Error, dale al espacio");
-					}
-					
-				}
+				
 
 			} while (!Bingo(carton));
 			System.out.println();
