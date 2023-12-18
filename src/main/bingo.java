@@ -64,15 +64,38 @@ public class bingo {
 		return completo;
 	}
 
+	// Linea
+	public static boolean cartonLinea(int matriz[][], boolean lineaCantada) {
+		
+		 final int CONTADOR_LINEA = 9;
+
+		    if (!lineaCantada) {
+		        for (int i = 0; i < matriz.length; i++) {
+		            int contador = 0;
+		            for (int j = 0; j < matriz[i].length; j++) {
+		                if (matriz[i][j] == 0) {
+		                    contador++;
+		                    if (contador == CONTADOR_LINEA) {
+		                        System.out.println("LINEA!");
+		                        return true; 
+		                    }
+		                }
+		            }
+		        }
+		    }
+
+		    return false;
+		}
+
 	public static int[][] imprimeMatriz(int matriz[][]) {
 		for (int i = 0; i < matriz.length; i++) {
 			System.out.println();
 			for (int j = 0; j < matriz[0].length; j++) {
 				if (matriz[i][j] == 0) {
-	                System.out.print(" X ");
-	            } else {
-	                System.out.printf("%2d ", matriz[i][j]);
-	            }
+					System.out.print(" X ");
+				} else {
+					System.out.printf("%2d ", matriz[i][j]);
+				}
 			}
 		}
 		return matriz;
@@ -93,7 +116,8 @@ public class bingo {
 		int[][] carton = new int[3][9];
 		int[] numerosMostrados = new int[90];
 		int menu, contador = 0, aleatorio = 0;
-
+		boolean lineaCantada = false;
+		
 		System.out.println("===========================");
 		System.out.println("   BIENVENIDO AL BINGO   ");
 		System.out.println("===========================");
@@ -154,6 +178,7 @@ public class bingo {
 				carton = CartonComprobacion(carton, aleatorio);
 				imprimeMatriz(carton);
 				System.out.println("\n\n===========================");
+				cartonLinea(carton, lineaCantada);
 
 			} while (!CartonCompleto(carton));
 			System.out.println();
