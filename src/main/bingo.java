@@ -12,7 +12,7 @@ public class bingo {
 		contador++;
 		return contador;
 	}
-
+	
 	// Generar número aleatorio entre 1 y 89 y no se repiten
 	public static int GenerarNumeroUnico(int[] numerosMostrados) {
 		int numeroRandom;
@@ -50,7 +50,7 @@ public class bingo {
 	}
 
 	// Comprueba que todos los números del carton están a 0 y termina el juego
-	public static boolean CartonCompleto(int matriz[][]) {
+	public static boolean Bingo(int matriz[][]) {
 
 		boolean completo = true;
 
@@ -117,6 +117,7 @@ public class bingo {
 		int[] numerosMostrados = new int[90];
 		int menu, contador = 0, aleatorio = 0;
 		boolean lineaCantada = false;
+		String espacio;
 		
 		System.out.println("===========================");
 		System.out.println("   BIENVENIDO AL BINGO   ");
@@ -168,6 +169,7 @@ public class bingo {
 			imprimeMatriz(carton);
 
 			do {
+				boolean pasarTurno = false;
 				System.out.println("\n\n===========================");
 				contador = Rondas(contador);
 				System.out.println("Ronda: " + contador);
@@ -179,10 +181,25 @@ public class bingo {
 				imprimeMatriz(carton);
 				System.out.println("\n\n===========================");
 				cartonLinea(carton, lineaCantada);
+				
+				System.out.println("Pulsa espacio para pasar de turno");
+				while(!pasarTurno) {
+					
+					espacio=sc.nextLine();
+					
+					if(espacio.equals(" ")) {
+					pasarTurno=true;
+					}
+					else {
+						System.out.println("Error, dale al espacio");
+					}
+					
+				}
 
-			} while (!CartonCompleto(carton));
+			} while (!Bingo(carton));
 			System.out.println();
-
+			System.out.println("\n\n===========================");
+			System.out.println("Bingo!!!!");
 		}
 
 		sc.close();
