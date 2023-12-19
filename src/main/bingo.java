@@ -163,7 +163,6 @@ public class bingo {
 		boolean lineaCantada = false;
 		boolean primeralinea = false;
 		boolean salir = false;
-		boolean partidaVotada = false;
 		int votoPartida = 0;
 		final int JUGADOR = 1;
 		final int MAQUINA = 2;
@@ -245,8 +244,11 @@ public class bingo {
 					System.out.println("\u001B[0m\n===========================");
 
 				} while (!(Bingo(carton)) && (!(Bingo(cartonMaquina))));
-				partidaVotada = false;
 				System.out.println("===========================");
+				contador = 0;
+				aleatorio = 0;
+				numerosMostrados = new int[90];
+			
 				if (ganador == JUGADOR) {
 					System.out.println("Ganador: Jugador");
 				} else if (ganador == MAQUINA) {
@@ -262,6 +264,7 @@ public class bingo {
 				System.out.println("\u001B[0m\nFIN DE LA PARTIDA");
 				System.out.println("\n===========================");
 				System.out.println("\n");
+				votoPartida = 0;
 				break;
 
 			case 2:
@@ -280,12 +283,10 @@ public class bingo {
 					if (menuApuesta == 1) {
 						System.out.println(
 								"\u001B[32mHas votado por el jugador!\n\u001B[0mTu voto se tendrá en cuenta\nen la próxima partida.\n");
-						partidaVotada = true;
 						votoPartida = JUGADOR;
 					} else if (menuApuesta == 2) {
 						System.out.println(
 								"\u001B[32mHas votado por la máquina!\n\u001B[0mTu voto se tendrá en cuenta\nen la próxima partida.\n");
-						partidaVotada = true;
 						votoPartida = MAQUINA;
 					}
 				}
