@@ -7,13 +7,12 @@ public class bingo {
 
 	static Scanner sc = new Scanner(System.in);
 
-	
 	// Conteo de rondas
 	public static int Rondas(int contador) {
 		contador++;
 		return contador;
 	}
-	
+
 	// Generar número aleatorio entre 1 y 89 y no se repiten
 	public static int GenerarNumeroUnico(int[] numerosMostrados) {
 		int numeroRandom;
@@ -49,22 +48,6 @@ public class bingo {
 
 		return cartonComprobado;
 	}
-	
-	//Pasar al siguiente turno
-	public static void Turno(String pasarTurno) {
-		
-		String continua;
-		
-		System.out.println("Introduce 'a' para pasar al siguiente turno");
-		continua=sc.nextLine();
-		
-		while(!continua.equalsIgnoreCase("a")) {
-			System.out.println("Error, introduce 'a' para avanzar");
-			continua=sc.nextLine();
-		}
-		
-		
-	}
 
 	// Comprueba que todos los números del carton están a 0 y termina el juego
 	public static boolean Bingo(int matriz[][]) {
@@ -83,35 +66,35 @@ public class bingo {
 
 	// Linea
 	public static boolean cartonLinea(int matriz[][], boolean lineaCantada) {
-		
-		 final int CONTADOR_LINEA = 9;
 
-		    if (!lineaCantada) {
-		        for (int i = 0; i < matriz.length; i++) {
-		            int contador = 0;
-		            for (int j = 0; j < matriz[i].length; j++) {
-		                if (matriz[i][j] == 0) {
-		                    contador++;
-		                    if (contador == CONTADOR_LINEA) {
-		                        System.out.println("LINEA!");
-		                        return true; 
-		                    }
-		                }
-		            }
-		        }
-		    }
+		final int CONTADOR_LINEA = 9;
 
-		    return false;
+		if (!lineaCantada) {
+			for (int i = 0; i < matriz.length; i++) {
+				int contador = 0;
+				for (int j = 0; j < matriz[i].length; j++) {
+					if (matriz[i][j] == 0) {
+						contador++;
+						if (contador == CONTADOR_LINEA) {
+							//System.out.println("\u001B[0m\nLINEA!");
+							return true;
+						}
+					}
+				}
+			}
 		}
+
+		return false;
+	}
 
 	public static int[][] imprimeMatriz(int matriz[][]) {
 		for (int i = 0; i < matriz.length; i++) {
 			System.out.println();
 			for (int j = 0; j < matriz[0].length; j++) {
 				if (matriz[i][j] == 0) {
-					System.out.print(" X ");
+					System.out.print("\u001B[31m X ");
 				} else {
-					System.out.printf("%2d ", matriz[i][j]);
+					System.out.printf("\u001B[0m%2d ", matriz[i][j]);
 				}
 			}
 		}
@@ -128,15 +111,61 @@ public class bingo {
 		return false;
 	}
 
+	// Generar números en el rango sin que se repita
+	public static int[][] rellenaCarton(int matriz[][]) {
+		for (int i = 0; i < matriz.length; i++) {
+			for (int j = 0; j < matriz[0].length; j++) {
+				if (j == 0) {
+					int numero;
+					do {
+						numero = (int) (Math.random() * 9) + 1;
+					} while (existeNumeroEnColumna(matriz, numero, j));
+					matriz[i][j] = numero;
+				} else {
+
+					int numero;
+					do {
+						numero = (int) (Math.random() * 10) + (j * 10);
+					} while (existeNumeroEnColumna(matriz, numero, j));
+					matriz[i][j] = numero;
+
+				}
+
+			}
+		}
+
+		return matriz;
+	}
+
+	// Ordenar los números en cada columna
+	public static int[][] ordenaCarton(int matriz[][]) {
+		matriz = rellenaCarton(matriz);
+
+		for (int j = 0; j < matriz[0].length; j++) {
+			int[] columna = new int[3];
+			for (int i = 0; i < matriz.length; i++) {
+				columna[i] = matriz[i][j];
+			}
+			Arrays.sort(columna);
+			for (int i = 0; i < matriz.length; i++) {
+				matriz[i][j] = columna[i];
+			}
+		}
+		return matriz;
+	}
+
 	public static void main(String[] args) {
 
 		int[][] carton = new int[3][9];
+		int[][] cartonMaquina = new int[3][9];
 		int[] numerosMostrados = new int[90];
 		int menu, contador = 0, aleatorio = 0;
 		boolean lineaCantada = false;
-		String avance = null;
+		boolean primeralinea = false;
+		boolean salir = false;
 		
-		
+		while ( salir != true) {
+
 		System.out.println("===========================");
 		System.out.println("   BIENVENIDO AL BINGO   ");
 		System.out.println("===========================");
@@ -144,71 +173,74 @@ public class bingo {
 		System.out.println("2) Salir");
 		System.out.println("===========================");
 		menu = sc.nextInt();
-
-		System.out.println("\n");
 		//Limpia buffer ya que al recibir un valor númerico primero y luego un string produce un salto de línea, por lo tanto, para que esto no ocurra se debe limpiar el buffer de esta forma
 		sc.nextLine();
-		
+
+		System.out.println("\n");
+
 		if (menu == 1) {
 
-			for (int i = 0; i < carton.length; i++) {
-				for (int j = 0; j < carton[0].length; j++) {
-					if (j == 0) {
-						int numero;
-						do {
-							numero = (int) (Math.random() * 9) + 1;
-						} while (existeNumeroEnColumna(carton, numero, j));
-						carton[i][j] = numero;
-					} else {
-						// Generar números en el rango sin que se repita
-						int numero;
-						do {
-							numero = (int) (Math.random() * 10) + (j * 10);
-						} while (existeNumeroEnColumna(carton, numero, j));
-						carton[i][j] = numero;
-
-					}
-
-				}
-			}
-
-			// Ordenar los números en cada columna
-			for (int j = 0; j < carton[0].length; j++) {
-				int[] columna = new int[3];
-				for (int i = 0; i < carton.length; i++) {
-					columna[i] = carton[i][j];
-				}
-				Arrays.sort(columna);
-				for (int i = 0; i < carton.length; i++) {
-					carton[i][j] = columna[i];
-				}
-			}
+			System.out.println("Estos son los cartones repartidos:");
 
 			System.out.println("===========================");
 			System.out.println("\tB I N G O");
-			imprimeMatriz(carton);
+			System.out.println("\t Jugador");
+			imprimeMatriz(ordenaCarton(carton));
+			System.out.println("\n\n===========================");
+			System.out.println("\t Máquina");
+			imprimeMatriz(ordenaCarton(cartonMaquina));
+			System.out.println("\n\n===========================");
+			
 
-			do {
+			do { 
+				boolean pasarTurno = false;
 				
-				System.out.println("\n\n===========================");
+				System.out.println(">> Pulsa enter para avanzar");
+				sc.nextLine();
+				
 				contador = Rondas(contador);
-				System.out.println("Ronda: " + contador);
+				System.out.println("\u001B[32mRONDA: " + contador);
 				aleatorio = (GenerarNumeroUnico(numerosMostrados));
-				System.out.println("Ha salido el " + aleatorio);
-				System.out.println("\n\n===========================");
+				System.out.println("\u001B[0mHa salido el " + aleatorio);
+				
+				// Jugador
+				System.out.println("\n===========================");
 				System.out.println("\tB I N G O");
+				System.out.println("\t Jugador");
 				carton = CartonComprobacion(carton, aleatorio);
 				imprimeMatriz(carton);
-				System.out.println("\n\n===========================");
-				cartonLinea(carton, lineaCantada);
-				Turno(avance);
-				
-				
+				if (cartonLinea(carton, lineaCantada) == true && primeralinea == false) {
+					System.out.println("\u001B[0m\nLINEA!");
+					primeralinea = true;
+				}
+				if ((Bingo(carton) == true)) {
+					System.out.println("\u001B[0m\nBINGO!");
+				}
+				System.out.println("\u001B[0m\n===========================");
 
-			} while (!Bingo(carton));
-			System.out.println();
-			System.out.println("\n\n===========================");
-			System.out.println("Bingo!!!!");
+				// Maquina
+				System.out.println("\t Máquina");
+				cartonMaquina = CartonComprobacion(cartonMaquina, aleatorio);
+				imprimeMatriz(cartonMaquina);
+				if (cartonLinea(cartonMaquina, lineaCantada) == true && primeralinea == false) {
+					System.out.println("\u001B[0m\nLINEA!");
+					primeralinea = true;
+				}
+				if ((Bingo(cartonMaquina) == true)) {
+					System.out.println("\u001B[0m\nBINGO!");
+				}
+				System.out.println("\u001B[0m\n===========================");
+
+				/**System.out.println(">> Pulsa enter para avanzar");
+				sc.nextLine();*/
+
+			} while (!(Bingo(carton)) && (!(Bingo(cartonMaquina))));
+			System.out.println("===========================");
+			System.out.println("\nFIN DE LA PARTIDA");
+			System.out.println("\n===========================");
+			System.out.println("\n");
+		}
+		
 		}
 
 		sc.close();
