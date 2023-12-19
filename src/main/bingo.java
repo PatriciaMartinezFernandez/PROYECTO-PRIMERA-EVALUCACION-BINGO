@@ -63,6 +63,59 @@ public class bingo {
 		}
 		return completo;
 	}
+	
+	//Muestra números que no han salido
+		public static void NumerosSinSalir(int matrizMostrada[]) {
+			
+			//Muestra que números no han salido
+	        for(int fila=0;fila<matrizMostrada.length;fila++) {
+	            if(matrizMostrada[fila]==0) {
+	                if(fila!=0) {
+	                    System.out.print(fila+ " ");
+	                }
+
+	            }
+	        }
+	        System.out.println();
+		}
+	
+	//Extra diana, selecciona 3 números entre el 1 y el 89 y si aciertas los 3 primeros,gana la diana de oro, 2 la diana de plata y 1 la diana de bronce
+	public static void Diana(int matrizMostrada[],int numElegidos[]) {
+		
+		int contadorAciertos=0;
+		
+		for(int i=0;i<numElegidos.length;i++) {
+			for(int j=0;j<matrizMostrada.length;j++) {
+				
+				if(numElegidos[i]==matrizMostrada[j]) {
+					contadorAciertos++;
+				}
+			}
+		}
+		if(contadorAciertos==3) {
+			System.out.println("\u001B[33mGanaste la diana de oro");
+			System.out.println("\u001B[37m");
+		}
+		else {
+			if(contadorAciertos==2) {
+				System.out.println("\u001B[36mGanaste la diana de plata");
+				System.out.println("\u001B[37m");
+			}
+			else {
+				if(contadorAciertos==1) {
+					System.out.println("\u001B[31mGanaste la diana de bronce");
+					System.out.println("\u001B[37m");
+				}
+				else {
+					System.out.println("No ganaste la diana");
+					
+				}
+			}
+		}
+		
+		
+	}
+	
 
 	// Linea
 	public static boolean cartonLinea(int matriz[][], boolean lineaCantada) {
@@ -159,10 +212,12 @@ public class bingo {
 		int[][] carton = new int[3][9];
 		int[][] cartonMaquina = new int[3][9];
 		int[] numerosMostrados = new int[90];
+		int[] numerosDiana = new int[3];
 		int menuPrincipal, menuApuesta, contador = 0, aleatorio = 0;
 		boolean lineaCantada = false;
 		boolean primeralinea = false;
 		boolean salir = false;
+		boolean salidaDiana = false;
 		int votoPartida = 0;
 		final int JUGADOR = 1;
 		final int MAQUINA = 2;
@@ -191,7 +246,55 @@ public class bingo {
 
 			switch (menuPrincipal) {
 			case 1:
+				
+				String eleccion;
+				System.out.println("¿Quieres jugar a la diana?");
+				System.out.println("\u001B[33m3/3 Diana de oro");
+				System.out.println("\u001B[36m2/3 Diana de plata");
+				System.out.println("\u001B[31m1/3 Diana de bronce");
+				System.out.println("\u001B[37m");
+				
+				
+				do {
+					System.out.println("\nSelecciona 's' o 'n' ");
+					 eleccion=sc.nextLine();
+				}
+				while(!eleccion.equalsIgnoreCase("s") && !eleccion.equalsIgnoreCase("n")) ;
+				
+				if(eleccion.equalsIgnoreCase("s")) {
+					salidaDiana=true;
+					System.out.println("Introduce 3 números del 1 al 89");
+					for (int i = 0; i < numerosDiana.length; i++) {
+				        int numeroIngresado;
+				        boolean repetido;
 
+				        do {
+				            numeroIngresado = sc.nextInt();
+				            repetido = false;
+
+				            if (numeroIngresado < 1 || numeroIngresado > 89) {
+				                System.out.println("Debe estar entre 1 y 89");
+				                repetido = true;
+				            } else {
+				            	
+				                for (int j = 0; j < i; j++) {
+				                    if (numerosDiana[j] == numeroIngresado) {
+				                        System.out.println("Ese número ha sido introducido anteriormente");
+				                        repetido = true;
+				                    }
+				                }
+				            }
+
+				        } while (repetido);
+
+				        numerosDiana[i] = numeroIngresado;
+				    }
+					//Limpieza de buffer
+					sc.nextLine();
+				}
+				
+					
+				
 				System.out.println("Estos son los cartones repartidos:");
 
 				System.out.println("===========================");
@@ -226,6 +329,12 @@ public class bingo {
 						System.out.println("\u001B[0m\nBINGO!");
 						ganador = JUGADOR;
 					}
+					if(contador==3 && salidaDiana==true) {
+						System.out.println();
+						System.out.println();
+						Diana(numerosMostrados,numerosDiana);
+						
+					}
 					System.out.println("\u001B[0m\n===========================");
 
 					// Maquina
@@ -249,6 +358,8 @@ public class bingo {
 
 				} while (!(Bingo(carton)) && (!(Bingo(cartonMaquina))));
 				System.out.println("===========================");
+				System.out.println("\nLos números sin salir han sido: ");
+				NumerosSinSalir(numerosMostrados);
 				contador = 0;
 				aleatorio = 0;
 				numerosMostrados = new int[90];
