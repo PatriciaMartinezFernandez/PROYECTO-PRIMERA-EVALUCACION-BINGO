@@ -76,7 +76,7 @@ public class bingo {
 					if (matriz[i][j] == 0) {
 						contador++;
 						if (contador == CONTADOR_LINEA) {
-							//System.out.println("\u001B[0m\nLINEA!");
+							// System.out.println("\u001B[0m\nLINEA!");
 							return true;
 						}
 					}
@@ -159,88 +159,148 @@ public class bingo {
 		int[][] carton = new int[3][9];
 		int[][] cartonMaquina = new int[3][9];
 		int[] numerosMostrados = new int[90];
-		int menu, contador = 0, aleatorio = 0;
+		int menuPrincipal, menuApuesta, contador = 0, aleatorio = 0;
 		boolean lineaCantada = false;
 		boolean primeralinea = false;
 		boolean salir = false;
-		
-		while ( salir != true) {
+		boolean partidaVotada = false;
+		int votoPartida = 0;
+		final int JUGADOR = 1;
+		final int MAQUINA = 2;
+		final int PREMIO = 500;
+		final int ACIERTO_APUESTA = 500;
+		int ganador = 0;
 
-		System.out.println("===========================");
-		System.out.println("   BIENVENIDO AL BINGO   ");
-		System.out.println("===========================");
-		System.out.println("1) Empezar partida");
-		System.out.println("2) Salir");
-		System.out.println("===========================");
-		menu = sc.nextInt();
-		//Limpia buffer ya que al recibir un valor númerico primero y luego un string produce un salto de línea, por lo tanto, para que esto no ocurra se debe limpiar el buffer de esta forma
-		sc.nextLine();
-
-		System.out.println("\n");
-
-		if (menu == 1) {
-
-			System.out.println("Estos son los cartones repartidos:");
+		while (salir != true) {
 
 			System.out.println("===========================");
-			System.out.println("\tB I N G O");
-			System.out.println("\t Jugador");
-			imprimeMatriz(ordenaCarton(carton));
-			System.out.println("\n\n===========================");
-			System.out.println("\t Máquina");
-			imprimeMatriz(ordenaCarton(cartonMaquina));
-			System.out.println("\n\n===========================");
-			
+			System.out.println("   BIENVENIDO AL BINGO   ");
+			System.out.println("\u001B[33m       PREMIO: 500€");
+			System.out.println("\u001B[0m===========================");
+			System.out.println("1) Empezar partida");
+			System.out.println("2) Apuestas");
+			System.out.println("3) Salir");
+			System.out.println("===========================");
+			menuPrincipal = sc.nextInt();
+			// Limpia buffer ya que al recibir un valor númerico primero y luego un string
+			// produce un salto de línea, por lo tanto, para que esto no ocurra se debe
+			// limpiar el buffer de esta forma
+			sc.nextLine();
 
-			do { 
-				boolean pasarTurno = false;
-				
-				System.out.println(">> Pulsa enter para avanzar");
-				sc.nextLine();
-				
-				contador = Rondas(contador);
-				System.out.println("\u001B[32mRONDA: " + contador);
-				aleatorio = (GenerarNumeroUnico(numerosMostrados));
-				System.out.println("\u001B[0mHa salido el " + aleatorio);
-				
-				// Jugador
-				System.out.println("\n===========================");
+			System.out.println("\n");
+
+			switch (menuPrincipal) {
+			case 1:
+
+				System.out.println("Estos son los cartones repartidos:");
+
+				System.out.println("===========================");
 				System.out.println("\tB I N G O");
 				System.out.println("\t Jugador");
-				carton = CartonComprobacion(carton, aleatorio);
-				imprimeMatriz(carton);
-				if (cartonLinea(carton, lineaCantada) == true && primeralinea == false) {
-					System.out.println("\u001B[0m\nLINEA!");
-					primeralinea = true;
-				}
-				if ((Bingo(carton) == true)) {
-					System.out.println("\u001B[0m\nBINGO!");
-				}
-				System.out.println("\u001B[0m\n===========================");
-
-				// Maquina
+				imprimeMatriz(ordenaCarton(carton));
+				System.out.println("\n\n===========================");
 				System.out.println("\t Máquina");
-				cartonMaquina = CartonComprobacion(cartonMaquina, aleatorio);
-				imprimeMatriz(cartonMaquina);
-				if (cartonLinea(cartonMaquina, lineaCantada) == true && primeralinea == false) {
-					System.out.println("\u001B[0m\nLINEA!");
-					primeralinea = true;
-				}
-				if ((Bingo(cartonMaquina) == true)) {
-					System.out.println("\u001B[0m\nBINGO!");
-				}
-				System.out.println("\u001B[0m\n===========================");
+				imprimeMatriz(ordenaCarton(cartonMaquina));
+				System.out.println("\n\n===========================");
 
-				/**System.out.println(">> Pulsa enter para avanzar");
-				sc.nextLine();*/
+				do {
+					boolean pasarTurno = false;
 
-			} while (!(Bingo(carton)) && (!(Bingo(cartonMaquina))));
-			System.out.println("===========================");
-			System.out.println("\nFIN DE LA PARTIDA");
-			System.out.println("\n===========================");
-			System.out.println("\n");
-		}
-		
+					System.out.println(">> Pulsa enter para avanzar");
+					sc.nextLine();
+
+					contador = Rondas(contador);
+					System.out.println("\u001B[32mRONDA: " + contador);
+					aleatorio = (GenerarNumeroUnico(numerosMostrados));
+					System.out.println("\u001B[0mHa salido el " + aleatorio);
+
+					// Jugador
+					System.out.println("\n===========================");
+					System.out.println("\tB I N G O");
+					System.out.println("\t Jugador");
+					carton = CartonComprobacion(carton, aleatorio);
+					imprimeMatriz(carton);
+					if (cartonLinea(carton, lineaCantada) == true && primeralinea == false) {
+						System.out.println("\u001B[0m\nLINEA!");
+						primeralinea = true;
+					}
+					if ((Bingo(carton) == true)) {
+						System.out.println("\u001B[0m\nBINGO!");
+						ganador = JUGADOR;
+					}
+					System.out.println("\u001B[0m\n===========================");
+
+					// Maquina
+					System.out.println("\t Máquina");
+					cartonMaquina = CartonComprobacion(cartonMaquina, aleatorio);
+					imprimeMatriz(cartonMaquina);
+					if (cartonLinea(cartonMaquina, lineaCantada) == true && primeralinea == false) {
+						System.out.println("\u001B[0m\nLINEA!");
+						primeralinea = true;
+					}
+					if ((Bingo(cartonMaquina) == true)) {
+						System.out.println("\u001B[0m\nBINGO!");
+						ganador = MAQUINA;
+					}
+					System.out.println("\u001B[0m\n===========================");
+
+				} while (!(Bingo(carton)) && (!(Bingo(cartonMaquina))));
+				partidaVotada = false;
+				System.out.println("===========================");
+				if (ganador == JUGADOR) {
+					System.out.println("Ganador: Jugador");
+				} else if (ganador == MAQUINA) {
+					System.out.println("Ganador: Máquina");
+				}
+				if (votoPartida == ganador) {
+					System.out.println("Acertaste apostando!");
+					System.out.println("\u001B[33mPREMIO: " + (PREMIO + ACIERTO_APUESTA) + "€");
+				} else {
+					System.out.println("Perdiste apostando!");
+					System.out.println("\u001B[33mPREMIO: " + PREMIO + "€");
+				}
+				System.out.println("\u001B[0m\nFIN DE LA PARTIDA");
+				System.out.println("\n===========================");
+				System.out.println("\n");
+				break;
+
+			case 2:
+				System.out.println("===========================");
+				System.out.println("\t APUESTAS");
+				System.out.println("\u001B[33mAcierta y duplica el premio!");
+				System.out.println("\u001B[0m===========================");
+				System.out.println("¿Por quién apuestas?");
+				System.out.println("1) Jugador");
+				System.out.println("2) Máquina");
+				System.out.println("3) Volver al menú");
+				System.out.println("===========================");
+				menuApuesta = sc.nextInt();
+
+				if (votoPartida == 0) {
+					if (menuApuesta == 1) {
+						System.out.println(
+								"\u001B[32mHas votado por el jugador!\n\u001B[0mTu voto se tendrá en cuenta\nen la próxima partida.\n");
+						partidaVotada = true;
+						votoPartida = JUGADOR;
+					} else if (menuApuesta == 2) {
+						System.out.println(
+								"\u001B[32mHas votado por la máquina!\n\u001B[0mTu voto se tendrá en cuenta\nen la próxima partida.\n");
+						partidaVotada = true;
+						votoPartida = MAQUINA;
+					}
+				}
+
+				else {
+					System.out.println("\u001B[31mOperación denegada.\u001B[0m\nYa has votado en esta partida!\n");
+				}
+				break;
+
+			case 3:
+				System.out.println("Saliendo...");
+				salir = true;
+				System.out.println("=== TERMINADO ===");
+				break;
+			}
 		}
 
 		sc.close();
