@@ -166,6 +166,7 @@ public class bingo {
 		int votoPartida = 0;
 		final int JUGADOR = 1;
 		final int MAQUINA = 2;
+		final int EMPATE = 3;
 		final int PREMIO = 500;
 		final int ACIERTO_APUESTA = 500;
 		int ganador = 0;
@@ -203,8 +204,6 @@ public class bingo {
 				System.out.println("\n\n===========================");
 
 				do {
-					boolean pasarTurno = false;
-
 					System.out.println(">> Pulsa enter para avanzar");
 					sc.nextLine();
 
@@ -238,8 +237,13 @@ public class bingo {
 						primeralinea = true;
 					}
 					if ((Bingo(cartonMaquina) == true)) {
-						System.out.println("\u001B[0m\nBINGO!");
-						ganador = MAQUINA;
+						if (ganador == JUGADOR) {
+							System.out.println("\u001B[0m\nBINGO!");
+							ganador = EMPATE;
+						} else {
+							System.out.println("\u001B[0m\nBINGO!");
+							ganador = MAQUINA;
+						}
 					}
 					System.out.println("\u001B[0m\n===========================");
 
@@ -248,17 +252,23 @@ public class bingo {
 				contador = 0;
 				aleatorio = 0;
 				numerosMostrados = new int[90];
-			
-				if (ganador == JUGADOR) {
+
+				if (ganador == EMPATE) {
+					System.out.println("Ganador: Empate");
+				} else if (ganador == JUGADOR) {
 					System.out.println("Ganador: Jugador");
-				} else if (ganador == MAQUINA) {
+				} else {
 					System.out.println("Ganador: Máquina");
 				}
 				if (votoPartida == ganador) {
 					System.out.println("Acertaste apostando!");
 					System.out.println("\u001B[33mPREMIO: " + (PREMIO + ACIERTO_APUESTA) + "€");
-				} else {
+				} else if (ganador == EMPATE) {
+					System.out.println("\u001B[33mPREMIO: " + (PREMIO / 2) + "€ para cada uno");
+				} else if (votoPartida != ganador && votoPartida != 0){
 					System.out.println("Perdiste apostando!");
+					System.out.println("\u001B[33mPREMIO: " + PREMIO + "€");
+				} else {
 					System.out.println("\u001B[33mPREMIO: " + PREMIO + "€");
 				}
 				System.out.println("\u001B[0m\nFIN DE LA PARTIDA");
