@@ -80,9 +80,12 @@ public class bingo {
 		}
 	
 	//Extra diana, selecciona 3 números entre el 1 y el 89 y si aciertas los 3 primeros,gana la diana de oro, 2 la diana de plata y 1 la diana de bronce
-	public static void Diana(int matrizMostrada[],int numElegidos[]) {
+	public static int Diana(int matrizMostrada[],int numElegidos[]) {
 		
 		int contadorAciertos=0;
+		int premioDiana=0;
+		final int oro=1000, plata=250,bronce=30;
+		
 		
 		for(int i=0;i<numElegidos.length;i++) {
 			for(int j=0;j<matrizMostrada.length;j++) {
@@ -95,16 +98,23 @@ public class bingo {
 		if(contadorAciertos==3) {
 			System.out.println("\u001B[33mGanaste la diana de oro");
 			System.out.println("\u001B[37m");
+			System.out.println("Se añadirán 1000€ al final");
+			premioDiana=oro;
+			
 		}
 		else {
 			if(contadorAciertos==2) {
 				System.out.println("\u001B[36mGanaste la diana de plata");
 				System.out.println("\u001B[37m");
+				System.out.println("Se añadirán 250€ al final");
+				premioDiana=plata;
 			}
 			else {
 				if(contadorAciertos==1) {
 					System.out.println("\u001B[31mGanaste la diana de bronce");
 					System.out.println("\u001B[37m");
+					System.out.println("Se añadirán 30€ al final");
+					premioDiana=bronce;
 				}
 				else {
 					System.out.println("No ganaste la diana");
@@ -112,7 +122,7 @@ public class bingo {
 				}
 			}
 		}
-		
+		return premioDiana;
 		
 	}
 	
@@ -225,6 +235,7 @@ public class bingo {
 		final int PREMIO = 500;
 		final int ACIERTO_APUESTA = 500;
 		int ganador = 0;
+		int boteDiana = 0;
 
 		while (salir != true) {
 
@@ -253,7 +264,6 @@ public class bingo {
 				System.out.println("\u001B[36m2/3 Diana de plata");
 				System.out.println("\u001B[31m1/3 Diana de bronce");
 				System.out.println("\u001B[37m");
-				
 				
 				do {
 					System.out.println("\nSelecciona 's' o 'n' ");
@@ -292,8 +302,7 @@ public class bingo {
 					//Limpieza de buffer
 					sc.nextLine();
 				}
-				
-					
+		
 				
 				System.out.println("Estos son los cartones repartidos:");
 
@@ -329,11 +338,11 @@ public class bingo {
 						System.out.println("\u001B[0m\nBINGO!");
 						ganador = JUGADOR;
 					}
+	
 					if(contador==3 && salidaDiana==true) {
 						System.out.println();
 						System.out.println();
-						Diana(numerosMostrados,numerosDiana);
-						
+						boteDiana=Diana(numerosMostrados,numerosDiana);
 					}
 					System.out.println("\u001B[0m\n===========================");
 
@@ -376,11 +385,20 @@ public class bingo {
 					System.out.println("\u001B[33mPREMIO: " + (PREMIO + ACIERTO_APUESTA) + "€");
 				} else if (ganador == EMPATE) {
 					System.out.println("\u001B[33mPREMIO: " + (PREMIO / 2) + "€ para cada uno");
+					if(boteDiana>0) {
+					System.out.println(("\u001B[33mY de diana : " + boteDiana + "€"));
+					}
 				} else if (votoPartida != ganador && votoPartida != 0){
 					System.out.println("Perdiste apostando!");
-					System.out.println("\u001B[33mPREMIO: " + PREMIO + "€");
+					System.out.println("\u001B[33mPREMIO: " +(PREMIO)+ "€");
+					if(boteDiana>0) {
+						System.out.println(("\u001B[33mY de diana : " + boteDiana + "€"));
+						}
 				} else {
-					System.out.println("\u001B[33mPREMIO: " + PREMIO + "€");
+					System.out.println("\u001B[33mPREMIO: " +(PREMIO)+ "€");
+					if(boteDiana>0) {
+						System.out.println(("\u001B[33mY de diana : " + boteDiana + "€"));
+						}
 				}
 				System.out.println("\u001B[0m\nFIN DE LA PARTIDA");
 				System.out.println("\n===========================");
