@@ -388,6 +388,7 @@ public class bingo {
 					contador = 0;
 					aleatorio = 0;
 					numerosMostrados = new int[90];
+					primeralinea=false;
 
 					if (ganador == EMPATE) {
 						System.out.println("Ganador: Empate");
