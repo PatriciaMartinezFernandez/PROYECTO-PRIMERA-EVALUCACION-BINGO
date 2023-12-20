@@ -61,3 +61,14 @@ Si no está completo se paasa a la siguiente ronda cuando el jugador lo especifi
 
 Comprobaciones para que todos los requisitos funcionen y buscar la optimización del código.
  
+## Partes realizadas por cada integrante
+
+## Rubén
+
+Generación de números aleatorios sin repetirse.
+Tachado de números en el cartón.
+Bingo!!
+Números que no han salido.
+Avance de turno(se creó una función que al final se desecho por pulsar el enter ya que era más optima este último).
+Extra del juego de Diana.
+Realización del manual de usuarios compartido con Jaime.
