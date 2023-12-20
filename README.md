@@ -72,3 +72,14 @@ Números que no han salido.
 Avance de turno(se creó una función que al final se desecho por pulsar el enter ya que era más optima este último).
 Extra del juego de Diana.
 Realización del manual de usuarios compartido con Jaime.
+
+## Jaime
+
+Menú del programa.
+Generación del cartón.
+Tachado de bingo, conviertiendo los 0 en X.
+Linea!
+Mejora del avance de turnos.
+Extra del menú de apuestas.
+Extra añadido saldo y precios.
+Realización del manual de usuarios compartido con Rubén.
