@@ -315,7 +315,7 @@ public class bingo {
 						// Limpieza de buffer
 						sc.nextLine();
 					} else {
-						System.out.println("\u001B[31mOperación denegada.\u001B[0m\nNo tienes suficiente saldo!\n");
+						System.out.println("\u001B[31mOperación denegada.\u001B[0m\n");
 						System.out.println(">> Pulsa enter para avanzar");
 						sc.nextLine();
 					}
